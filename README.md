@@ -29,6 +29,21 @@ Setup: `pip install -e ".[dev]"`, then `pytest`. All limits live in `config.yaml
   `hold_days`, with costs and liquidity-based slippage. Features use only data up to `t`
   (covered by a test).
 
+## Results so far (v1 technical score, Jan 2022 - Nov 2026, 57 monthly periods)
+
+| Variant | Avg / month | Total |
+|---|---|---|
+| Baseline (2xATR stop, costs) | -1.84% | -68% |
+| No costs | -1.05% | -50% |
+| No stop, no costs | -0.05% | -14% |
+| Equal-weight tradable universe (gross, no costs) | +0.6% | +28% |
+
+Only 1.8% of months reached +10%. **The v1 score shows no edge over the market basket**,
+even before costs and despite survivorship bias flattering it. Costs and tight stops
+make it worse. Do not trade this. Weights were deliberately not tuned on this history
+(that would overfit); next steps are an out-of-sample split, a market-regime filter,
+fundamentals, and testing simpler hypotheses one at a time.
+
 ## Known limits
 
 - **No fundamentals yet.** NSE's website blocks cloud IPs and Kite has no fundamentals

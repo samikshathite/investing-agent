@@ -1,0 +1,35 @@
+# All numbers here are defaults, not recommendations. Capital and risk limits are
+# still undecided, so change them before trusting paper-trade sizing.
+capital: 1000000            # INR, paper capital
+risk:
+  risk_per_trade_pct: 1.0   # max loss per trade as % of capital (entry -> stop)
+  max_positions: 10
+  monthly_stop_pct: 8.0     # advisory: stop opening new trades after this monthly loss
+
+universe:
+  series: [EQ]              # add SM, ST to include SME-board stocks (very illiquid)
+  min_price: 20
+  min_avg_turnover_lacs: 200   # 20d average daily turnover, INR lakh (200 = Rs 2 cr)
+  max_atr_pct: 0.09            # drop stocks whose 14d ATR exceeds 9% of price
+
+strategy:
+  hold_days: 21             # trading days, roughly one month
+  stop_atr_mult: 2.0        # stop = entry - mult * ATR14
+  weights:
+    rel_strength: 0.35
+    trend: 0.20
+    near_52w_high: 0.20
+    volume_surge: 0.15
+    rsi_band: 0.10
+
+costs:
+  round_trip_pct: 0.25      # brokerage + STT + exchange + stamp + GST, approx
+  slippage_pct_per_side:    # by 20d average turnover (INR lakh)
+    liquid: 0.10            # >= 5000 lakh
+    mid: 0.25               # >= 1000 lakh
+    thin: 0.60
+
+data:
+  cache_dir: data/raw
+  panel_path: data/panel.pkl
+  paper_db: data/paper.db
